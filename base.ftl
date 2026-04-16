@@ -1,0 +1,13 @@
+password = Password
+open = Open
+save 
+copy
+paste
+cut
+search
+close
+enter_text
+status
+show_password
+hide_password
+about
