@@ -16,6 +16,26 @@ typedef struct {
   char value[MAX_MESSAGE_VALUE_LENGTH];
 } FTLMessage;
 
+char *url_encode_simple(const char *str) {
+  size_t len = strlen(str);
+  char *encoded = malloc(3 * len + 1); // Max possible size
+  if (!encoded)
+    return NULL;
+
+  char *p = encoded;
+  for (size_t i = 0; i < len; i++) {
+    unsigned char c = str[i];
+    if (isalnum(c) || c == '-' || c == '_' || c == '.' || c == '~') {
+      *p++ = c;
+    } else {
+      sprintf(p, "%%%02X", c);
+      p += 3;
+    }
+  }
+  *p = 0;
+  return encoded;
+}
+
 // Function to trim leading and trailing whitespace from a string
 void trim(char *str) {
   char *start = str;
@@ -182,8 +202,9 @@ char *translate(const char *source, const char *target, const char *value) {
 
   chunk.memory = malloc(1);
   chunk.size = 0;
+  char *encoded = url_encode_simple(value);
   snprintf(url, sizeof(url), "https://mtranslate.myridia.com?s=%s&t=%s&v=%s",
-           source, target, value);
+           source, target, encoded);
 
   fprintf(stderr, "%s\n", url);
 
