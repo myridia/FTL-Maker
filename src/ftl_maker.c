@@ -1,3 +1,4 @@
+#include <ctype.h>
 #include <curl/curl.h>
 #include <jansson.h>
 #include <stdio.h>
@@ -5,6 +6,78 @@
 #include <string.h>
 #include <time.h>
 #include <unistd.h>
+
+#define MAX_LINE_LENGTH 256
+#define MAX_MESSAGE_ID_LENGTH 64
+#define MAX_MESSAGE_VALUE_LENGTH 256
+
+// Structure to represent a message
+typedef struct {
+  char id[MAX_MESSAGE_ID_LENGTH];
+  char value[MAX_MESSAGE_VALUE_LENGTH];
+} FTLMessage;
+
+// Function to trim leading and trailing whitespace from a string
+void trim(char *str) {
+  char *start = str;
+  while (isspace((unsigned char)*start))
+    start++;
+
+  char *end = str + strlen(str) - 1;
+  while (end > start && isspace((unsigned char)*end))
+    end--;
+
+  end[1] = '\0';
+
+  memmove(str, start, (end - start) + 2);
+}
+
+// Function to parse an FTL file
+int parse_ftl_file(const char *filename, FTLMessage *messages,
+                   int *num_messages) {
+  FILE *file = fopen(filename, "r");
+  if (!file) {
+    perror("Error opening file");
+    return 1;
+  }
+
+  char line[MAX_LINE_LENGTH];
+  *num_messages = 0;
+
+  while (fgets(line, MAX_LINE_LENGTH, file) != NULL) {
+    trim(line);
+
+    // Skip comments and empty lines
+    if (line[0] == '#' || line[0] == '\0') {
+      continue;
+    }
+
+    char *equals_pos = strchr(line, '=');
+    if (equals_pos != NULL) {
+      // Extract message ID
+      strncpy(messages[*num_messages].id, line, equals_pos - line);
+      messages[*num_messages].id[equals_pos - line] = '\0';
+      trim(messages[*num_messages].id);
+
+      // Extract message value
+      strncpy(messages[*num_messages].value, equals_pos + 1,
+              MAX_MESSAGE_VALUE_LENGTH - 1);
+      messages[*num_messages].value[MAX_MESSAGE_VALUE_LENGTH - 1] = '\0';
+      trim(messages[*num_messages].value);
+
+      (*num_messages)++;
+
+      if (*num_messages >= 1000) {
+        fprintf(stderr, "Warning.\n");
+        break;
+      }
+    }
+  }
+
+  fclose(file);
+  return 0;
+}
+
 // Structure to hold the response data
 struct MemoryStruct {
   char *memory;
@@ -105,8 +178,19 @@ int main(int argc, char *argv[]) {
   char ftl[104][6];
   fill_ftl(ftl);
 
-  for (int i = 0; i < 10; i++) {
+  for (int i = 0; i < 104; i++) {
     printf("ftl[%d]: %s\n", i, ftl[i]);
   }
+
+  FTLMessage messages[104]; // Array to store the messages
+  int num_messages = 0;
+
+  if (parse_ftl_file("base.ftl", messages, &num_messages) == 0) {
+    printf("Parsed %d messages:\n", num_messages);
+    for (int i = 0; i < num_messages; i++) {
+      printf("ID: %s, Value: %s\n", messages[i].id, messages[i].value);
+    }
+  }
+
   return 0;
 }
