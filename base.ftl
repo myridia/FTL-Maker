@@ -11,3 +11,4 @@ status = Status
 show_passwod = Show password
 hide_password = Hide password
 ! about = About
+about_us = About Us
