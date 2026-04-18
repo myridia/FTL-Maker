@@ -1,6 +1,7 @@
 #include <ctype.h>
 #include <curl/curl.h>
 #include <jansson.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -286,6 +287,19 @@ char *translate(const char *source, const char *target, const char *value) {
   return translation;
 }
 
+bool starts_with(const char *str, const char *prefix) {
+  if (str == NULL || prefix == NULL) {
+    return false;
+  }
+  bool x = strncmp(str, prefix, strlen(prefix));
+  // printf("%s %c %b \n", prefix, str[0], x);
+  if (x == 0) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 int main(int argc, char *argv[]) {
   printf("Arguments: %d \n", argc);
   char ftl[104][6];
@@ -301,13 +315,16 @@ int main(int argc, char *argv[]) {
   if (parse_ftl_file("base.ftl", messages, &num_messages) == 0) {
     printf("Parsed %d messages:\n", num_messages);
     for (int i = 0; i < num_messages; i++) {
-      // printf("ID: %s, Value: %s\n", messages[i].id, messages[i].value);
-
+      // char *translation = messages[i].value;
+      if (!starts_with(messages[i].id, "!")) {
+        // printf("ID: %s, Value: %s\n", messages[i].id, messages[i].value);
+        // char *translation2 = translate("en", "de", messages[i].value);
+        // strcpy(translation, translate("en", "de", messages[i].value));
+      }
       char *translation = translate("en", "de", messages[i].value);
+      printf("Translation: %s\n", translation);
 
       if (translation != NULL) {
-        // printf("Original: %s\n", messages[i].value);
-        printf("Translation: %s\n", translation);
         free(translation);
       } else {
         fprintf(stderr, "Translation failed for: %s\n", messages[i].value);
@@ -315,6 +332,7 @@ int main(int argc, char *argv[]) {
     }
   }
 
+  /*
   char *translation = translate("en", "de", "hello");
 
   if (translation != NULL) {
@@ -324,6 +342,6 @@ int main(int argc, char *argv[]) {
   } else {
     fprintf(stderr, "Translation failed for: %s\n", "hello");
   }
-
+  */
   return 0;
 }
