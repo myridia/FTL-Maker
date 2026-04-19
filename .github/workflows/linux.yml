@@ -19,7 +19,7 @@ jobs:
     steps:
       - name: Dependencies
         run: |
-         sudo apt-get upate -y
+         sudo apt-get update -y
          sudo apt-get install build-essential git cmake curl -y
 
       - name: Checkout
