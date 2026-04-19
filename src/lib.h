@@ -42,10 +42,10 @@ struct MemoryStruct {
 };
 
 int add(int a, int b);
-// int parse_ftl_file(const char *filename, FTLMessage *messages,
-//
-// int *num_messages);
-// void *fill_ftl(char ftl[104][6]);
+char *translate(const char *source, const char *target, const char *value);
+static size_t write_memory_callback(void *contents, size_t size, size_t nmemb,
+                                    void *userp);
+void *fill_ftl(char ftl[104][6]);
 bool starts_with(const char *str, const char *prefix);
 char *get_substring(const char *str, int start, int length);
 void log_message(const char *filename, const char *format, ...);
@@ -58,4 +58,5 @@ void trim(char *str);
 
 int is_safe_utf8(unsigned char c);
 char *url_encode_utf8(const char *str);
+
 #endif
