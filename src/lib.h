@@ -58,5 +58,6 @@ void trim(char *str);
 
 int is_safe_utf8(unsigned char c);
 char *url_encode_utf8(const char *str);
-
+int parse_ftl_file(const char *filename, FTLMessage *messages,
+                   int *num_messages);
 #endif

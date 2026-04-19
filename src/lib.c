@@ -22,6 +22,52 @@ static size_t write_memory_callback(void *contents, size_t size, size_t nmemb,
   return realsize;
 }
 
+// Function to parse an FTL file
+int parse_ftl_file(const char *filename, FTLMessage *messages,
+                   int *num_messages) {
+  FILE *file = fopen(filename, "r");
+  if (!file) {
+    perror("Error opening file");
+    return 1;
+  }
+
+  char line[MAX_LINE_LENGTH];
+  *num_messages = 0;
+
+  while (fgets(line, MAX_LINE_LENGTH, file) != NULL) {
+    trim(line);
+
+    // Skip comments and empty lines
+    if (line[0] == '#' || line[0] == '\0') {
+      continue;
+    }
+
+    char *equals_pos = strchr(line, '=');
+    if (equals_pos != NULL) {
+      // Extract message ID
+      strncpy(messages[*num_messages].id, line, equals_pos - line);
+      messages[*num_messages].id[equals_pos - line] = '\0';
+      trim(messages[*num_messages].id);
+
+      // Extract message value
+      strncpy(messages[*num_messages].value, equals_pos + 1,
+              MAX_MESSAGE_VALUE_LENGTH - 1);
+      messages[*num_messages].value[MAX_MESSAGE_VALUE_LENGTH - 1] = '\0';
+      trim(messages[*num_messages].value);
+
+      (*num_messages)++;
+
+      if (*num_messages >= 1000) {
+        fprintf(stderr, "Warning.\n");
+        break;
+      }
+    }
+  }
+
+  fclose(file);
+  return 0;
+}
+
 // Function to translate a single string
 char *translate(const char *source, const char *target, const char *value) {
   CURL *curl;
