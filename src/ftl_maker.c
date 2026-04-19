@@ -168,7 +168,7 @@ void *fill_ftl(char ftl[104][6]) {
       } else {
         json_t *ftl_array = json_object_get(root, "ftl");
         size_t array_size = json_array_size(ftl_array);
-        printf("Numbers: %zu\n", array_size);
+        // printf("Numbers: %zu\n", array_size);
         if (!json_is_array(ftl_array)) {
           printf("...is not array");
         }
@@ -346,15 +346,16 @@ void log_message(const char *filename, const char *format, ...) {
 }
 
 int main(int argc, char *argv[]) {
-  printf("Arguments: %d \n", argc);
+  // printf("Arguments: %d \n", argc);
   char ftl[104][6];
   fill_ftl(ftl);
 
-  FILE *fp = fopen("test", "w");
-  fprintf(fp, "%s\n", "hello");
-  fclose(fp);
+  // FILE *fp = fopen("i18n/test", "w");
+  // fprintf(fp, "%s\n", "hello");
+  // fclose(fp);
 
   for (int x = 0; x < 104; x++) {
+    // printf("%s\n", ftl[x]);
     if (x == 2) {
       break;
     }
@@ -362,19 +363,26 @@ int main(int argc, char *argv[]) {
     char *code = get_substring(ftl[x], 0, 2); // First 2 characters
     bool same_code = strncmp(code, "en", 2);
 
-    printf("ftl[%d]: %s\n", x, code);
+    char fpath[11] = "i18n/";
+    char s2[] = "test";
+    sprintf(fpath + strlen(fpath), "%s.ftl", ftl[x]);
+    FILE *fp = fopen(fpath, "w");
+
     FTLMessage messages[104];
     int num_messages = 0;
 
     if (parse_ftl_file("base.ftl", messages, &num_messages) == 0) {
-      printf("Parsed %d messages:\n", num_messages);
+      // printf("Parsed %d messages:\n", num_messages);
       for (int i = 0; i < num_messages; i++) {
 
         char *translation = NULL;
         if (!starts_with(messages[i].id, "!") && same_code == 1) {
-          // printf("ID: %s, Value: %s\n", messages[i].id, messages[i].value);
+          printf("code: %s\n", code);
+          printf("ID: %s, Value: %s\n", messages[i].id, messages[i].value);
+
           translation = translate("en", code, messages[i].value);
-          printf("Translation: %s\n", translation); //
+          // printf("Translation: %s\n", translation); //
+          fprintf(fp, "%s = %s \n", messages[i].id, translation);
         }
 
         // translation = translate("en", "de", messages[i].value);
@@ -384,6 +392,7 @@ int main(int argc, char *argv[]) {
         }
       }
     }
+    fclose(fp);
   }
 
   return 0;
