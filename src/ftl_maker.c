@@ -33,9 +33,6 @@ typedef struct {
   char value[MAX_MESSAGE_VALUE_LENGTH];
 } FTLMessage;
 
-int is_safe_utf8(unsigned char c) {
-  return isalnum(c) || c == '-' || c == '_' || c == '.' || c == '~';
-}
 char *url_encode_utf8(const char *str) {
   size_t len = strlen(str);
   char *encoded =
@@ -550,7 +547,7 @@ int main(int argc, char *argv[]) {
       FILE *fp = fopen(file_path, "w");
       FTLMessage messages[104];
       int num_messages = 0;
-
+      /*
       if (parse_ftl_file(basefile, messages, &num_messages) == 0) {
         for (int i = 0; i < num_messages; i++) {
           char *translation = NULL;
@@ -570,7 +567,7 @@ int main(int argc, char *argv[]) {
           //}
         }
       }
-
+      */
       fclose(fp);
     }
   }

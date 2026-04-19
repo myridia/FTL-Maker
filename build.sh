@@ -1,6 +1,8 @@
 #!/bin/bash
 
 SOURCE_FILE="src/ftl_maker.c"
+SOURCE_FILE2="src/lib.c"
+SOURCE_FILE3="src/lib.h"
 SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )" 
 
 
@@ -25,7 +27,7 @@ fi
 run_build_and_execute
 
 # Monitor the source file for changes
-while inotifywait -e modify "$SOURCE_FILE"; do
+while inotifywait -e modify "$SOURCE_FILE" "$SOURCE_FILE2" "$SOURCE_FILE3"; do
     echo "...changed"
     run_build_and_execute
 done
