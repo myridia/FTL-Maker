@@ -328,12 +328,37 @@ char *get_substring(const char *str, int start, int length) {
   return substring;
 }
 
+void log_message(const char *filename, const char *format, ...) {
+  FILE *fp = fopen(filename, "a");
+  if (fp == NULL) {
+    perror("Error opening log file");
+    return; // Exit if file cannot be opened
+  }
+
+  va_list args;
+  va_start(args, format);
+  vfprintf(fp, format, args);
+  va_end(args);
+
+  fprintf(fp, "\n");
+
+  fclose(fp);
+}
+
 int main(int argc, char *argv[]) {
   printf("Arguments: %d \n", argc);
   char ftl[104][6];
   fill_ftl(ftl);
 
+  FILE *fp = fopen("test", "w");
+  fprintf(fp, "%s\n", "hello");
+  fclose(fp);
+
   for (int x = 0; x < 104; x++) {
+    if (x == 2) {
+      break;
+    }
+
     char *code = get_substring(ftl[x], 0, 2); // First 2 characters
     bool same_code = strncmp(code, "en", 2);
 
@@ -359,18 +384,7 @@ int main(int argc, char *argv[]) {
         }
       }
     }
-    // break;
   }
-  /*
-  char *translation = translate("en", "de", "hello");
 
-  if (translation != NULL) {
-    printf("Original: %s\n", "hello");
-    printf("Translation: %s\n", translation);
-    free(translation); // Free the allocated memory
-  } else {
-    fprintf(stderr, "Translation failed for: %s\n", "hello");
-  }
-  */
   return 0;
 }
