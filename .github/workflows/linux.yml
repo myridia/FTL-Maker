@@ -1,0 +1,42 @@
+name: Linux
+on:
+  push:
+    branches: ["main"]
+    tags:
+      - '*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write 
+  issues: read
+  packages: none
+
+jobs:
+  build:
+    if: github.repository_owner == 'myridia'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dependencies
+        run: |
+         sudo apt-get install build-essential git cmake -y
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build
+        run: |
+         cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+         cmake --build build          
+
+      - name: Release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: 'build/Release/bin/ftl_maker'
+          tag: ${{ github.ref }}
+          overwrite: true
+          file_glob: true
+
+
+          
