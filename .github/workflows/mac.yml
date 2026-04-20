@@ -15,16 +15,14 @@ permissions:
 jobs:
   build_macos_intel:
     if: github.repository_owner == 'myridia'
-    runs-on: macos-15
+    runs-on: macos-latest-large
     steps:
        - name: Dependencies
          run: |
-          git clone --depth 1 https://github.com/frang75/nappgui_src.git
-          cd nappgui_src
-          cmake --version 
-          cmake -G Xcode -S . -B build -DNAPPGUI_DEMO=NO
-          cmake --build build --config Release -j 4
-          sudo cmake --install build --config Release --prefix /usr/local/nappgui
+          BOOTSTRAP_TAR="bootstrap-macos14.5-trunk-arm64-20251114.tar.gz"
+          BOOTSTRAP_SHA="512a3c209fa0e83b4f614bc6ce11928c10b75cd0" 
+          curl -O https://pkgsrc.smartos.org/packages/Darwin/bootstrap/${BOOTSTRAP_TAR}
+          sudo tar -zxpf ${BOOTSTRAP_TAR} -C /
           
        - name: Checkout
          uses: actions/checkout@v4
