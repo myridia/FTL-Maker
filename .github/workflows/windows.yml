@@ -27,8 +27,10 @@ jobs:
           choco install curl tree -y
       - name: Check
         run: |
-          $env:CURL_DIR
-          tree C:\ProgramData\chocolatey\lib\curl
+         echo "CURL_INCLUDE_DIR is: $env:CURL_INCLUDE_DIR"
+         echo "CURL_LIBRARY is: $env:CURL_LIBRARY"
+         # $env:CURL_DIR
+         # tree C:\ProgramData\chocolatey\lib\curl
           
       - name: Checkout
         uses: actions/checkout@v4
