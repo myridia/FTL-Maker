@@ -15,8 +15,7 @@ permissions:
   packages: none
 
 jobs:
-  # Single deploy job since we're just deploying
-  build_linux_windows:
+  Build:
     if: github.repository_owner == 'myridia'
     runs-on: windows-latest
     steps:
