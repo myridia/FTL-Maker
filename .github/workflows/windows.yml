@@ -25,6 +25,7 @@ jobs:
     steps:
       - name: Dependencies
         run: |
+          Remove-Item alias:curl 
           choco install curl pkgconfiglite tree -y
       - name: Check
         run: |
