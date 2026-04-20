@@ -28,13 +28,14 @@ jobs:
       - name: Build
         run: |
          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
-         cmake --build build          
+         cmake --build build       
+         mv build/ftl_maker ftl_maker  
 
       - name: Release
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: 'build/ftl_maker'
+          file: 'ftl_maker'
           tag: ${{ github.ref }}
           overwrite: true
           file_glob: true
