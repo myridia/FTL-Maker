@@ -16,7 +16,7 @@ permissions:
 env:
   CURL_INCLUDE_DIR: C:\ProgramData\chocolatey\lib\curl\tools\curl-8.19.0_1-win64-mingw\include\curl
   CURL_LIBRARY: C:\ProgramData\chocolatey\lib\curl\tools\curl-8.19.0_1-win64-mingw\lib\libcurl.a
-  # PKG_CONFIG_PATH: C:\ProgramData\chocolatey\lib\pkgconfiglite\tools
+  PKG_CONFIG_PATH: C:\ProgramData\chocolatey\lib\pkgconfiglite\tools
 
 jobs:
   Build:
@@ -31,10 +31,7 @@ jobs:
          echo "CURL_INCLUDE_DIR is: $env:CURL_INCLUDE_DIR"
          echo "CURL_LIBRARY is: $env:CURL_LIBRARY"
          echo "PKG_CONFIG_PATH is: $env:PKG_CONFIG_PATH"
-
-         
-       # $env:CURL_DIR
-       # tree C:\ProgramData\chocolatey\lib\curl
+         tree C:\ProgramData\chocolatey\lib\curl
          
           
       - name: Checkout
