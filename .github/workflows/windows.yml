@@ -25,8 +25,7 @@ jobs:
     steps:
       - name: Dependencies
         run: |
-        # Remove-Item alias:curl 
-          choco install curl pkgconfiglite tree -y
+         choco install curl pkgconfiglite tree -y
       - name: Check
         run: |
          echo "CURL_INCLUDE_DIR is: $env:CURL_INCLUDE_DIR"
