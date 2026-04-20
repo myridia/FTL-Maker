@@ -49,9 +49,12 @@ jobs:
 
       - name: Build
         run: |
-           cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
-           cmake --build build       
-           mv build/ftl_maker ftl_maker_mac 
+          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release `
+            -DCURL_INCLUDE_DIR="C:\vcpkg\packages\curl_x64-windows\include" `
+            -DCURL_LIBRARY="C:\vcpkg\packages\curl_x64-windows\lib\libcurl.lib" `
+            -DPKG_CONFIG_PATH="C:\vcpkg\packages\curl_x64-windows\lib\pkgconfig"
+          cmake --build build --config Release
+          dir build\Release
         
 
       - name: Release
