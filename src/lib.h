@@ -17,8 +17,7 @@
 #ifdef _WIN32
 #include <direct.h>
 #include <io.h>
-#include <sys/types.h>
-#include <windows.h> // For GetFileAttributes
+#include <windows.h> 
 #define access _access
 #define F_OK 0
 #define mkdir(path, mode) _mkdir(path)
