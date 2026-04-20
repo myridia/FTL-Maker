@@ -25,7 +25,7 @@ jobs:
       - name: Check
         run: |
           $env:CURL_DIR
-          dir C:\ProgramData\chocolatey\lib\curl\tools
+          tree C:\ProgramData\chocolatey\lib\curl
           
       - name: Checkout
         uses: actions/checkout@v4
