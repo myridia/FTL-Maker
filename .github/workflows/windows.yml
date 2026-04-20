@@ -13,10 +13,6 @@ permissions:
   issues: read
   packages: none
 
-#env:
-#   CURL_INCLUDE_DIR: C:\vcpkg\packages\curl_x64-windows\include\curl\
-#   CURL_LIBRARY: C:\vcpkg\packages\curl_x64-windows\lib\ibcurl.lib
-#   PKG_CONFIG_PATH: C:\vcpkg\packages\curl_x64-windows\lib\pkgconfig
 
 jobs:
   Build:
@@ -34,15 +30,7 @@ jobs:
       - name: Check
         run: |
           tree C:\vcpkg\packages
-          dir C:\vcpkg\packages\curl_x64-windows\lib\ 
-          dir C:\vcpkg\packages\curl_x64-windows\lib\pkgconfig 
-        #  vcpkg install curl
-        # echo "CURL_INCLUDE_DIR is: $env:CURL_INCLUDE_DIR"
-        # echo "CURL_LIBRARY is: $env:CURL_LIBRARY"
-        # echo "PKG_CONFIG_PATH is: $env:PKG_CONFIG_PATH"
-        # tree C:\ProgramData\chocolatey\lib\pkgconfiglite
-        # pkg-config --modversion curl
-          
+
           
       - name: Checkout
         uses: actions/checkout@v4
