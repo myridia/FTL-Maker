@@ -34,7 +34,8 @@ jobs:
       - name: Check
         run: |
           tree C:\vcpkg\packages
-
+          dir C:\vcpkg\packages\curl_x64-windows\lib\ 
+          dir C:\vcpkg\packages\curl_x64-windows\lib\pkgconfig 
         #  vcpkg install curl
         # echo "CURL_INCLUDE_DIR is: $env:CURL_INCLUDE_DIR"
         # echo "CURL_LIBRARY is: $env:CURL_LIBRARY"
