@@ -51,9 +51,8 @@ jobs:
       - name: Build
         run: |
           cmake -S . -B build -DCMAKE_BUILD_TYPE=Release `
-            -DCURL_INCLUDE_DIR="C:\vcpkg\packages\curl_x64-windows\include" `
-            -DCURL_LIBRARY="C:\vcpkg\packages\curl_x64-windows\lib\libcurl.lib" `
-            -DPKG_CONFIG_PATH="C:\vcpkg\packages\curl_x64-windows\lib\pkgconfig"
+            -DCMAKE_TOOLCHAIN_FILE="C:\vcpkg\scripts\buildsystems\vcpkg.cmake" `
+            -DVCPKG_TARGET_TRIPLET="x64-windows"
           cmake --build build --config Release
           dir build\Release
         
