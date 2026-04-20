@@ -10,6 +10,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <dirent.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 
 #ifdef _WIN32
 #include <direct.h>
@@ -20,9 +23,6 @@
 #define F_OK 0
 #define mkdir(path, mode) _mkdir(path)
 #else
-#include <dirent.h>
-#include <sys/stat.h>
-#include <sys/types.h>
 #include <unistd.h>
 #endif
 
