@@ -21,7 +21,7 @@ jobs:
     steps:
       - name: Dependencies
         run: |
-          git clone --depth 1 https://github.com/frang75/nappgui_src.git 
+          choco install jansson
         
       - name: Checkout
         uses: actions/checkout@v4
