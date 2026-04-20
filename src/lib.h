@@ -25,7 +25,6 @@
 #include <unistd.h>
 #endif
 
-#endif // LIB_H
 
 #define MAX_LINE_LENGTH 256
 #define MAX_MESSAGE_ID_LENGTH 64
