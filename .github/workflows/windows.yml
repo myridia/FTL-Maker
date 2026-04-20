@@ -21,7 +21,7 @@ jobs:
     steps:
       - name: Dependencies
         run: |
-          choco search jansson
+          choco install mingw cmake curl jansson -y
           
       - name: Checkout
         uses: actions/checkout@v4
