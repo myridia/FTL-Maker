@@ -31,7 +31,8 @@ jobs:
          echo "CURL_INCLUDE_DIR is: $env:CURL_INCLUDE_DIR"
          echo "CURL_LIBRARY is: $env:CURL_LIBRARY"
          echo "PKG_CONFIG_PATH is: $env:PKG_CONFIG_PATH"
-         pkg-config --modversion curl
+         tree C:\ProgramData\chocolatey\lib\pkgconfiglite
+        # pkg-config --modversion curl
         # tree C:\ProgramData\chocolatey\lib\curl
           
           
