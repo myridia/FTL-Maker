@@ -3,7 +3,7 @@
 
 int main(int argc, char *argv[]) {
   char *basefile = NULL;
-  char *app = "app.ftl";
+  char *app = "/app.ftl";
   char *folder_path = "i18n/";
 
   for (int i = 0; i < argc; i++) {
@@ -19,7 +19,8 @@ int main(int argc, char *argv[]) {
     if (strncmp(argv[i], "-a", 2) == 0) {
       if (argv[i + 1]) {
         char *sanitized_string2 = sanitize_string(argv[i + 1]);
-        app = concat_strings(sanitized_string2, ".ftl");
+        char *app1 = concat_strings(sanitized_string2, ".ftl");
+        app = concat_strings("/", app1);
       }
     }
 
@@ -48,10 +49,12 @@ int main(int argc, char *argv[]) {
       char *code = get_substring(ftl[x], 0, 2);
 
       if (strlen(ftl[x]) == 5 || strlen(ftl[x]) == 2) {
-        printf("%d/%d ...make %s/%s  \n", x, TRANS, ftl[x], app);
+        // printf("%d/%d ...make %s/%s  \n", x, TRANS, ftl[x], app);
         char *folder_path2 = concat_strings(folder_path, ftl[x]);
         int result2 = create_directory(folder_path2);
         char *file_path = concat_strings(folder_path2, app);
+
+        printf("%d/%d ...make %s  \n", x, TRANS, file_path);
 
         FILE *fp = fopen(file_path, "w");
         FTLMessage messages[104];
