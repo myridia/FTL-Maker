@@ -29,8 +29,7 @@ jobs:
           cmake --build build       
           mv build/ftl_maker ftl_maker_mac.app  
           hdiutil create -volname "ftl_maker_mac" -srcfolder "ftl_maker_mac.app" -ov -format UDZO "ftl_maker_mac.dmg"
-
-
+          
        - name: Release
          uses: svenstaro/upload-release-action@v2
          with:
