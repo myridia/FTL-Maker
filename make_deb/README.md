@@ -8,10 +8,15 @@ dpkg-buildpackage -us -uc -b
 
 ```
 
-## After install the deb package into the os
+## Install the deb package into the os with apt, it will install all depedencies as well
+```
+apt install --fix-broken  ./ftl-maker_1.1-1_all.deb
+```
+### Or Install the deb package into the os with dpkg
 ```
 sudo dpkg -i ftl-maker_1.2-1_all.deb 
 ```
+
 
 ## Review the installed files of the installed deb package
 ```
