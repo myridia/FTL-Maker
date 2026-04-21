@@ -19,7 +19,7 @@ jobs:
     steps:
        - name: Dependencies
          run: |
-          brew install jansson  
+          brew install jansson tree
        - name: Checkout
          uses: actions/checkout@v4
 
@@ -29,12 +29,13 @@ jobs:
           cmake --build build       
           mv build/ftl_maker ftl_maker_mac.app  
           hdiutil create -volname "ftl_maker_mac" -srcfolder "ftl_maker_mac.app" -ov -format UDZO "ftl_maker_mac.dmg"
+          tree
           
        - name: Release
          uses: svenstaro/upload-release-action@v2
          with:
            repo_token: ${{ secrets.GITHUB_TOKEN }}
-           file: 'ftl_maker_mac.dmb'
+           file: 'ftl_maker_mac.dmg'
            tag: ${{ github.ref }}
            overwrite: true
            file_glob: true
