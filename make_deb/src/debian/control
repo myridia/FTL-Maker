@@ -14,8 +14,6 @@ Homepage: <insert the upstream URL, if relevant>
 Package: ftl-maker
 Architecture: all
 Depends:
- ${misc:Depends},
-libcurl4,
-libjansson4
+ ${misc:Depends}, libcurl4, libjansson4
 Description: <insert up to 60 chars description>
  <Insert long description, indented with spaces.>
