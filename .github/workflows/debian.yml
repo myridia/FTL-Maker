@@ -14,7 +14,7 @@ permissions:
 
 jobs:
   build:
-    if: github.repository_owner == 'myridia'
+    if: github.repository_owner == 'myridiax'
     runs-on: ubuntu-latest
     steps:
       - name: Dependencies
